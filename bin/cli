@@ -38,9 +38,6 @@ Object.keys(behavior).forEach( behaviorKey => {
     p.action(action);
 })
 
-
-
-
 program.version(`cli version: ${packageJson.version}`).usage(`${chalk.cyan('<command> [options]')}`);
 
 program.parse(process.argv);

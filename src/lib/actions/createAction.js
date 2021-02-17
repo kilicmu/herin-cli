@@ -174,7 +174,7 @@ function rewritePackageJson(packageJsonPath, targetPath = packageJsonPath) {
 
 function printSuccessMessage(name) {
     console.log(chalk.green('=================================================='));
-    console.log(chalk.green(`your project: ${chalk.pink(name)} was created successfully! `));
+    console.log(chalk.green(`your project: ${chalk.cyan(name)} was created successfully! `));
     console.log(chalk.green(`run: `)); 
     console.log(chalk.green(`   cd ${name}`)); 
     console.log(chalk.green(`   yarn / npm install`)); 
