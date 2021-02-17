@@ -157,7 +157,7 @@ async function copyTemplate(fromPath, toPath) {
     })
 
     await copySpinner.run();
-    return rewritePackageJson(path.join(toPath, 'package.tmpl.json'), path.join(toPath, 'package.json'));
+    return rewritePackageJson(path.join(fromPath, 'package.tmpl.json'), path.join(toPath, 'package.json'));
 }
 
 function rewritePackageJson(packageJsonPath, targetPath) {
