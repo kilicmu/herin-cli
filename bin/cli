@@ -1,0 +1,37 @@
+#! /usr/bin/env node
+const path = require("path");
+const {program} = require("commander");
+const packageJson = require("../package.json");
+const chalk = require('chalk');
+const {SUPPORT_TEMPLATE_TYPES} = require('../src/assets/index.js');
+const { serializationType } = require('../src/lib/index.js');
+const {createAction} = require('../src/lib/actions');
+
+
+const behavior = {
+    'create': {
+        command: 'create <app-name>',
+        description: `${chalk.grey('create an application')}`,
+        options: [
+            ['-f, --force', 'overwrite project'], 
+            ['-t --type <type>', 'your template type', 'ts']
+        ],
+        action: createAction
+    }
+}
+
+
+
+Object.keys(behavior).forEach( behaviorKey => {
+    const {command, description, options, action} = behavior[behaviorKey];
+    const p = program.command(command).description(description)
+    options.forEach((option) => p.option(...option))
+    p.action(action);
+})
+
+
+
+
+program.version(`cli version: ${packageJson.version}`).usage(`${chalk.cyan('<command> [options]')}`);
+
+program.parse(process.argv);
