@@ -16,6 +16,6 @@ quick start:
 
 `herin create [project-name]`: clone template;
 
-`herin clean [<-t, --type>]`: clear template caches;
+`herin clean [<-t, --template>]`: clear template caches;
 
 🎉🎉🎉 enjoy it ! 🎉🎉🎉
