@@ -2,7 +2,7 @@
 
 🤣 herin-cli is a simple cli tool;
 
-😛 supports to build your typescript or javascript library;
+😛 supports for build your typescript or javascript library;
 
 👻 package through rollup, has very faster feedback then webpack;
 
