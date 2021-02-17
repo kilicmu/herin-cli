@@ -106,9 +106,10 @@ async function fetchTag(url) {
 
 
 async function download(repo, tag, targetPath) {
+    if(!fs.existsSync(CACHE_PATH)) fs.mkdirSync(CACHE_PATH);
     const requestURL = `herin-cli/${repo.name}/${tag ? '#' + tag : ''}`; // /herin-cli/typescript-template#1.0.0
-    const cachedTemplates = fs.readdirSync(path.resolve(__dirname, '../../templates'));
-    const cacheName = `${repo.name}${tag ? '@' + tag : ''}`;
+    const cachedTemplates = fs.readdirSync(CACHE_PATH);
+    const cacheName = `${repo.name}${tag ? '@' + tag : ''}`; // typescript-template@1.0.0
 
     const downloadSpinner = new Spinner(()=> downloadGitRepo(requestURL, path.join(CACHE_PATH, cacheName)), {
         message: 'download template.....',
