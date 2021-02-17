@@ -157,10 +157,10 @@ async function copyTemplate(fromPath, toPath) {
     })
 
     await copySpinner.run();
-    return rewritePackageJson(path.join(toPath, 'package.json'));
+    return rewritePackageJson(path.join(toPath, 'package.tmpl.json'), path.join(toPath, 'package.json'));
 }
 
-function rewritePackageJson(packageJsonPath, targetPath = packageJsonPath) {
+function rewritePackageJson(packageJsonPath, targetPath) {
     const packageJsonTmpl = fs.readFileSync(packageJsonPath, 'utf8');
     const packageJsonFileContent = ejs.render(packageJsonTmpl, renderObject);
     fs.writeFileSync(targetPath, packageJsonFileContent, {
