@@ -6,10 +6,10 @@ const axios = require('axios');
 const util = require('util');
 const ejs = require('ejs');
 const chalk = require('chalk');
+const Spinner = require('../../uitls/spinner');
 
 const downloadGitRepo = util.promisify(require('download-git-repo'));
-const Spinner = require('../../uitls/spinner');
-const {REPOS_URL, CACHE_PATH} = require('../../assets/index');
+const { REPOS_URL, CACHE_PATH } = require('../../assets/index');
 
 
 const renderObject = {
@@ -20,6 +20,7 @@ module.exports = async (name, argv) => {
     if(!name) {
         name = await askForProjectName();
     }
+
     initlizeRenderObject(name);
     let {type, force} = argv;
     const targetPath = path.join(process.cwd(), name);
@@ -92,7 +93,8 @@ async function fetchRepo() {
         ]);
         return repos.filter(repo => (repo.name === templateName))[0];
     }catch(e){
-        throw new Error('fetch repo false');
+        printError(e); 
+        process.exit(-1)
     }
 }
 
@@ -144,7 +146,8 @@ async function download(repo, tag, targetPath) {
         return await copyTemplate(cachedTemplatePath, targetPath);
     }catch(e){
         fs.rmdirSync(targetPath, {recursive: true});
-        throw e;
+        printError(e); 
+        process.exit(-1)
     }
 }
 
@@ -157,17 +160,19 @@ async function copyTemplate(fromPath, toPath) {
     })
 
     await copySpinner.run();
-    return rewritePackageJson(path.join(fromPath, 'package.tmpl.json'), path.join(toPath, 'package.json'));
+    return rewritePackageJson(path.join(toPath, 'package.tmpl.json'), path.join(toPath, 'package.json'));
 }
 
-function rewritePackageJson(packageJsonPath, targetPath) {
-    const packageJsonTmpl = fs.readFileSync(packageJsonPath, 'utf8');
+function rewritePackageJson(packageJsonTmplPath, targetPath) {
+    const packageJsonTmpl = fs.readFileSync(packageJsonTmplPath, 'utf8');
     const packageJsonFileContent = ejs.render(packageJsonTmpl, renderObject);
     fs.writeFileSync(targetPath, packageJsonFileContent, {
         encoding: 'utf8',
         mode: 0o666,
         flag: 'w'
     })
+    fs.unlinkSync(packageJsonTmplPath)
+    
 }
 
 
@@ -178,5 +183,12 @@ function printSuccessMessage(name) {
     console.log(chalk.green(`run: `)); 
     console.log(chalk.green(`   cd ${name}`)); 
     console.log(chalk.green(`   yarn / npm install`)); 
+    console.log(chalk.green(`   yarn serve / npm run serve`));
     console.log(chalk.green('=================================================='))
+}
+
+function printError(error) {
+    console.log(chalk.red('---------------------------------------------'))
+    console.log(chalk.red(error.message))
+    console.log(chalk.red('---------------------------------------------'))
 }

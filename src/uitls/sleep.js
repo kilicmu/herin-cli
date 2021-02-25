@@ -1,4 +1,4 @@
-module.exports.sleep = function(time) {
+module.exports = function sleep(time) {
     return new Promise(resolve => {
         setTimeout(resolve, time);
     })

@@ -3,31 +3,7 @@ const path = require("path");
 const {program} = require("commander");
 const packageJson = require("../package.json");
 const chalk = require('chalk');
-const {SUPPORT_TEMPLATE_TYPES} = require('../src/assets/index.js');
-const { serializationType } = require('../src/lib/index.js');
-const createAction = require('../src/lib/actions/createAction');
-const cleanAction = require('../src/lib/actions/cleanAction')
-
-
-const behavior = {
-    'create': {
-        command: 'create [<app-name>]',
-        description: `${chalk.blue('create an application')}`,
-        options: [
-            ['-f, --force', 'overwrite project'], 
-            ['-t --type <type>', 'your template type', 'ts']
-        ],
-        action: createAction
-    },
-    'clean': {
-        command: 'clean',
-        description:`${chalk.blue('clean your cached templates')}` ,
-        options: [
-            ['-t --template <template>', 'clean template name']
-        ],
-        action: cleanAction
-    }
-}
+const behavior = require('../behavior.config');
 
 
 

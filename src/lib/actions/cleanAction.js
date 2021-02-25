@@ -6,8 +6,8 @@ const chalk = require('chalk');
 module.exports = function (args) {
     const {template} = args;
     if(!fs.existsSync(CACHE_PATH)) {
-        console.log(halk.pink(`no cache need to clean`));
-        return -1;
+        console.log(chalk.red(`no cache need to clean`));
+        process.exit(-1)
     }
 
     if(template) {
