@@ -4,7 +4,7 @@
 
 😛 supports for build your typescript or javascript library;
 
-👻 package through rollup, has very faster feedback then webpack;
+👻 package through rollup, has faster feedback then webpack;
 
 🙃 we will support more templates or functions;
 
